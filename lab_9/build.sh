@@ -38,11 +38,11 @@ done
 ###
 
 if [[ "$ARG_INITIALIZE_PROJECT" = true ]]; then
-  initialize "$@"
+  initializeProject "$@"
 fi
 
 if [[ "$ARG_CREATE_CLUSTER" = true ]]; then
-  createCluster
+  createCluster "$@"
 fi
 
 if [[ "$ARG_BUILD" = true ]]; then
