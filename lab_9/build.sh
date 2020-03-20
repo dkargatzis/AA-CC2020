@@ -37,14 +37,14 @@ done
 
 ###
 
-if [[ "$ARG_INSTALL_REQUIREMENTS" = true ]]; then
+if [[ "$ARG_INITIALIZE_PROJECT" = true ]]; then
   initialize "$@"
 fi
 
-if [[ "$ARG_ZIP_FILE" = true ]]; then
+if [[ "$ARG_CREATE_CLUSTER" = true ]]; then
   createCluster
 fi
 
-if [[ "$ARG_AWS_COPY" = true ]]; then
+if [[ "$ARG_BUILD" = true ]]; then
   build
 fi
