@@ -6,6 +6,7 @@ function initializeProject {
   echo "Initializing GCP Project $PROJECT_ID"
   gcloud config set project "$PROJECT_ID"
   gcloud config set compute/zone "$COMPUTE_ZONE"
+  gcloud services enable cloudbuild.googleapis.com
 }
 
 function createCluster {
@@ -13,6 +14,7 @@ function createCluster {
   NUM_NODES=$3
   gcloud container clusters create "$NAME" --num-nodes="$NUM_NODES"
   gcloud container clusters get-credentials "$NAME"
+  gcloud compute disks create --size=50GB --zone=us-central1-a hdp-disk
 }
 
 function build {
@@ -30,7 +32,7 @@ for arg in "$@"; do
   if [[ "$arg" = -c ]] || [[ "$arg" = --create-cluster ]]; then
     ARG_CREATE_CLUSTER=true
   fi
-  if [[ "$arg" = -a ]] || [[ "$arg" = --build ]]; then
+  if [[ "$arg" = -b ]] || [[ "$arg" = --build ]]; then
     ARG_BUILD=true
   fi
 done
