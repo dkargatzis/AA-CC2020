@@ -1,0 +1,42 @@
+# This file configures the hello-world app which serves public web traffic.
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hdp-gke
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: hdp
+  template:
+    metadata:
+      labels:
+        app: hdp
+    spec:
+      containers:
+        - name: hdp
+          # Replace $GCLOUD_PROJECT with your project ID
+          image: gcr.io/bbk-dev/hdp-gke:1.0.0
+          resources:
+            requests:
+              cpu: 1000m
+              memory: 2048Mi
+            limits:
+              cpu: 2000m
+              memory: 4096Mi
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: hdp
+  name: hdp-svc
+spec:
+  ports:
+    - port: 8088
+      name: yarn
+    - port: 50070
+      name: hdfs
+  selector:
+    app: hdp
+  type: NodePort
